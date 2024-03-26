@@ -1,5 +1,13 @@
+import AddRestaurant from '../components/AddRestaurant'
+import Header from '../components/Header'
+
 const Home = () => {
-  return <div>Home</div>
+  return (
+    <div>
+      <Header />
+      <AddRestaurant />
+    </div>
+  )
 }
 
 export default Home
