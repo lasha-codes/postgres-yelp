@@ -1,4 +1,17 @@
+import { useEffect } from 'react'
+import RestaurantFinder from '../apis/RestaurantFinder'
+
 const RestaurantList = () => {
+  useEffect(() => {
+    try {
+      const response = RestaurantFinder.get('/').then((response) => {
+        console.log(response)
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }, [])
+
   return (
     <div className='list-group'>
       <table className='table table-hover table-dark'>
