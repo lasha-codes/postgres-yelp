@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import RestaurantFinder from '../apis/RestaurantFinder'
 
 const UpdateRestaurant = () => {
@@ -9,6 +9,7 @@ const UpdateRestaurant = () => {
   const [name, setName] = useState('')
   const [location, setLocation] = useState('')
   const [priceRange, setPriceRange] = useState('')
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,12 +24,12 @@ const UpdateRestaurant = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const updatedRestaurant = await RestaurantFinder.put(`/${id}`, {
+    await RestaurantFinder.put(`/${id}`, {
       name,
       location,
       price_range: priceRange,
     })
-    console.log(updatedRestaurant)
+    navigate('/')
   }
 
   return (
