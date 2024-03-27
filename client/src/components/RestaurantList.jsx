@@ -2,9 +2,11 @@
 import { useContext, useEffect } from 'react'
 import RestaurantFinder from '../apis/RestaurantFinder'
 import { RestaurantsContext } from '../context/RestaurantsContext'
+import { useNavigate } from 'react-router-dom'
 
-const RestaurantList = (props) => {
+const RestaurantList = () => {
   const { restaurants, setRestaurants } = useContext(RestaurantsContext)
+  const navigate = useNavigate()
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -17,6 +19,23 @@ const RestaurantList = (props) => {
 
     fetchData()
   }, [])
+
+  const handleDelete = async (id) => {
+    try {
+      await RestaurantFinder.delete(`/${id}`)
+      setRestaurants(
+        restaurants.filter((restaurant) => {
+          return restaurant.id !== id
+        })
+      )
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  const handleUpdate = (id) => {
+    navigate(`/restaurants/${id}/update`)
+  }
 
   return (
     <div className='list-group'>
@@ -41,39 +60,24 @@ const RestaurantList = (props) => {
                   <td>{'$'.repeat(restaurant.price_range)}</td>
                   <td>reviews</td>
                   <td>
-                    <button className='btn btn-warning'>Update</button>
+                    <button
+                      onClick={() => handleUpdate(restaurant.id)}
+                      className='btn btn-warning'
+                    >
+                      Update
+                    </button>
                   </td>
                   <td>
-                    <button className='btn btn-danger'>Delete</button>
+                    <button
+                      onClick={() => handleDelete(restaurant.id)}
+                      className='btn btn-danger'
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               )
             })}
-          {/* <tr> */}
-          {/* <td>mcdonald</td> */}
-          {/* <td>New York</td> */}
-          {/* <td>$$</td> */}
-          {/* <td>Rating</td> */}
-          {/* <td> */}
-          {/* <button className='btn btn-warning'>Update</button> */}
-          {/* </td> */}
-          {/* <td> */}
-          {/* <button className='btn btn-danger'>Delete</button> */}
-          {/* </td> */}
-          {/* </tr> */}
-
-          {/* <tr> */}
-          {/* <td>mcdonald</td> */}
-          {/* <td>New York</td> */}
-          {/* <td>$$</td> */}
-          {/* <td>Rating</td> */}
-          {/* <td> */}
-          {/* <button className='btn btn-warning'>Update</button> */}
-          {/* </td> */}
-          {/* <td> */}
-          {/* <button className='btn btn-danger'>Delete</button> */}
-          {/* </td> */}
-          {/* </tr> */}
         </tbody>
       </table>
     </div>
@@ -81,3 +85,5 @@ const RestaurantList = (props) => {
 }
 
 export default RestaurantList
+
+// stopLine - 4:03:08

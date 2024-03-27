@@ -19,7 +19,9 @@ const AddRestaurant = () => {
       })
       addRestaurants(response.data.data.restaurant)
       console.log(response)
-    } catch (err) {}
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   return (
