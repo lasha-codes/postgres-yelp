@@ -1,5 +1,7 @@
-import { useState } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import RestaurantFinder from '../apis/RestaurantFinder'
 
 const UpdateRestaurant = () => {
   const { id } = useParams()
@@ -7,6 +9,17 @@ const UpdateRestaurant = () => {
   const [name, setName] = useState('')
   const [location, setLocation] = useState('')
   const [priceRange, setPriceRange] = useState('')
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await RestaurantFinder.get(`/${id}`)
+      const { restaurant } = response.data.data
+      setName(restaurant.name)
+      setLocation(restaurant.location)
+      setPriceRange(restaurant.price_range)
+    }
+    fetchData()
+  }, [])
 
   return (
     <div className='px-5'>
