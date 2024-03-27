@@ -21,6 +21,16 @@ const UpdateRestaurant = () => {
     fetchData()
   }, [])
 
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const updatedRestaurant = await RestaurantFinder.put(`/${id}`, {
+      name,
+      location,
+      price_range: priceRange,
+    })
+    console.log(updatedRestaurant)
+  }
+
   return (
     <div className='px-5'>
       <form className='form-group row gap-3'>
@@ -54,7 +64,13 @@ const UpdateRestaurant = () => {
             type='number'
           />
         </div>
-        <button className='btn btn-primary'>Submit</button>
+        <button
+          type='submit'
+          onClick={handleSubmit}
+          className='btn btn-primary'
+        >
+          Submit
+        </button>
       </form>
     </div>
   )
