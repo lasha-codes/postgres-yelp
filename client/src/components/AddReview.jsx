@@ -1,4 +1,10 @@
+import { useState } from 'react'
+
 const AddReview = () => {
+  const [name, setName] = useState('')
+  const [reviewText, setReviewText] = useState('')
+  const [rating, setRating] = useState('Rating')
+
   return (
     <div className='mb-2'>
       <form>
@@ -6,6 +12,8 @@ const AddReview = () => {
           <div className='form-group col-8 mb-3'>
             <label htmlFor='name'>Name</label>
             <input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               id='name'
               placeholder='name'
               type='text'
@@ -14,10 +22,14 @@ const AddReview = () => {
           </div>
           <div className='form-group col-4'>
             <label htmlFor='rating'></label>
-            <select className='custom-select form-control col-4' id='rating'>
-              <option disable value='1'>
-                1
-              </option>
+            <select
+              value={rating}
+              onChange={(e) => setRating(e.target.value)}
+              className='custom-select form-control col-4'
+              id='rating'
+            >
+              <option disabled>Rating</option>
+              <option value='1'>1</option>
               <option disable value='2'>
                 2
               </option>
@@ -35,7 +47,12 @@ const AddReview = () => {
         </div>
         <div className='form-group'>
           <label htmlFor='Review'>Review</label>
-          <textarea id='Review' className='form-control'></textarea>
+          <textarea
+            value={reviewText}
+            onChange={(e) => setReviewText(e.target.value)}
+            id='Review'
+            className='form-control'
+          ></textarea>
         </div>
         <button className='btn btn-primary mt-2'>Submit</button>
       </form>
