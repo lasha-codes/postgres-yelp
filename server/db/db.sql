@@ -17,3 +17,11 @@ SELECT trunc(AVG(rating), 3) AS average_rating FROM reviews;
 SELECT trunc(AVG(rating), 2) AS average_rating FROM reviews WHERE restaurant_id = 14;
 SELECT location, count(location) FROM restaurants group by location;
 SELECT name AS username, rating AS restaurant_rating FROM reviews;
+SELECT restaurant_id, count(restaurant_id) FROM reviews group by restaurant_id;
+
+-- sql joins
+SELECT * FROM restaurants inner join reviews on restaurants.id = reviews.restaurant_id;
+
+SELECT * FROM restaurants left join reviews on restaurants.id = reviews.restaurant_id;
+
+SELECT * FROM restaurants right join reviews on restaurants.id = reviews.restaurant_id;
