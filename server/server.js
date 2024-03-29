@@ -28,13 +28,19 @@ app.get('/api/v1/restaurants', async (req, res) => {
 app.get('/api/v1/restaurants/:id', async (req, res) => {
   const { id } = req.params
   try {
-    const results = await db.query('SELECT * FROM restaurants WHERE id = $1', [
-      id,
-    ])
+    const restaurant = await db.query(
+      'SELECT * FROM restaurants WHERE id = $1',
+      [id]
+    )
+    const reviews = await db.query(
+      'SELECT * FROM reviews where restaurant_id = $1',
+      [req.params.id]
+    )
     res.status(200).json({
       status: 'success',
       data: {
-        restaurant: results.rows[0],
+        restaurant: restaurant.rows[0],
+        reviews: reviews.rows,
       },
     })
   } catch (err) {
@@ -90,6 +96,7 @@ app.delete('/api/v1/restaurants/:id', async (req, res) => {
     const results = await db.query('DELETE FROM restaurants where id = $1', [
       req.params.id,
     ])
+
     res.status(204).json({
       status: 'success',
     })
@@ -102,5 +109,3 @@ const port = process.env.PORT || 3001
 app.listen(port, () => {
   console.log(`server is up and listening on ${port}`)
 })
-
-// stopLine - 3:29:44
