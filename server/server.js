@@ -75,15 +75,12 @@ app.put('/api/v1/restaurants/:id', async (req, res) => {
       'UPDATE restaurants SET name = $1, location = $2, price_range = $3 where id = $4 returning *',
       [req.body.name, req.body.location, req.body.price_range, req.params.id]
     )
-    console.log(results)
     res.status(200).json({
       status: 'success',
       data: {
         restaurant: results.rows[0],
       },
     })
-    console.log(req.params.id)
-    console.log(req.body)
   } catch (err) {
     console.log(err)
   }
@@ -110,7 +107,6 @@ app.post('/api/v1/restaurants/:id/addReview', async (req, res) => {
       'INSERT INTO reviews (restaurant_id, name, review, rating) values($1, $2, $3, $4) returning *;',
       [req.params.id, req.body.name, req.body.review, req.body.rating]
     )
-    console.log(addedReview)
     res.status(201).json({
       status: 'success',
       data: {

@@ -10,12 +10,17 @@ const AddReview = () => {
 
   const handleSubmitReview = async (e) => {
     e.preventDefault()
-    const response = await RestaurantFinder.post(`${id}/addReview`, {
-      name,
-      review: reviewText,
-      rating,
-    })
-    console.log(response)
+    try {
+      const response = await RestaurantFinder.post(`${id}/addReview`, {
+        name,
+        review: reviewText,
+        rating,
+      })
+      window.location.reload()
+      console.log(response)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (
